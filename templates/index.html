@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Translator</title>
+    <link rel="stylesheet" href="../static/css/header.css" />
+    <link rel="stylesheet" href="../static/css/body.css" />
+    <link rel="stylesheet" href="../static/css/footer.css" />
+    <link rel="stylesheet" href="../static/css/fonts.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <p class="logo">Comic Translator</p>
+        </nav>
+    </header>
+    <main>
+        <div class="container">
+            <input type="file" id="imageInput" accept="image/*" style="display: none" />
+            <label for="imageInput" id="button-upload">UPLOAD GAMBAR</label>
+            <button id="button-translate" onclick="uploadImage()">Terjemahkan</button>
+        </div>
+        <div class="hero">
+            <img src="../static/assets/hero-banner (2).jpg" alt="manga page 2">
+            <img src="../static/assets/hero-banner (3).jpg" alt="manga page 3">
+            <img src="../static/assets/hero-banner (1).jpg" alt="manga page 1">
+        </div>
+        <div class="results">
+            <div id="resultImage"></div>
+        </div>
+        
+    </main>
+    <!-- show result -->
+    <script src="../static/script/script.js"></script>
+</body>
+
+</html>
