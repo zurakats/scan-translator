@@ -1,6 +1,6 @@
 from flask import Flask, request, send_file, render_template
 from flask_cors import CORS
-from image_processor_v3 import process_image
+from image_processor import process_image
 from werkzeug.utils import secure_filename
 import os
 
