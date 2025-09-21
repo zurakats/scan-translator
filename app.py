@@ -1,47 +1,51 @@
-from flask import Flask, request, send_file, render_template
+from flask import Flask, request, send_file, render_template, jsonify
 from flask_cors import CORS
-from image_processor import process_image
+from image_processor_v4 import process_image, selectOCR
 from werkzeug.utils import secure_filename
 import os
+import base64
 
-# Inisialisasi Flask dan aktifkan CORS
 app = Flask(__name__)
 CORS(app)
 
-# Direktori upload
 UPLOAD_FOLDER = 'static'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Route untuk halaman utama
 @app.route('/')
 def home():
-    return render_template('index.html')  # pastikan ada di folder templates/
+    return render_template('index.html')
 
-# Route untuk proses gambar
 @app.route('/process-image', methods=['POST'])
 def process_image_endpoint():
     try:
-        if 'image' not in request.files:
-            return {'error': 'No image provided'}, 400
+        if 'image[]' not in request.files:
+            return jsonify({'error': 'No image provided'}), 400
 
-        file = request.files['image']
-        filename = secure_filename(file.filename)
-        filepath = os.path.join(UPLOAD_FOLDER, filename)
-        file.save(filepath)
+        sourceLang = request.form['source']
+        targetLang = request.form['target']
+        files = request.files.getlist('image[]')
 
-        # Proses gambar dengan model
-        output_img = process_image(filepath)
+        results = []
+        ocr, index, translate_code = selectOCR(sourceLang)
+        for file in files:
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(UPLOAD_FOLDER, filename)
+            file.save(filepath)
+            
+            output_img = process_image(filepath, ocr, index, translate_code, targetLang)
 
-        # Simpan hasil ke file baru
-        output_path = os.path.join(UPLOAD_FOLDER, 'output.png')
-        output_img.save(output_path)
+            output_path = os.path.join(UPLOAD_FOLDER, f"output_{filename}")
+            output_img.save(output_path)
 
-        return send_file(output_path, mimetype='image/png')
+            with open(output_path, "rb") as f:
+                encoded = base64.b64encode(f.read()).decode('utf-8')
+            results.append(f"data:image/png;base64,{encoded}")
+
+        return jsonify({'results': results})
 
     except Exception as e:
         print(f"⚠️ Error saat memproses gambar: {e}")
-        return {'error': str(e)}, 500
+        return jsonify({'error': str(e)}), 500
 
-# Jalankan server lokal
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

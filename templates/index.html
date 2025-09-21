@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../static/css/body.css" />
     <link rel="stylesheet" href="../static/css/footer.css" />
     <link rel="stylesheet" href="../static/css/fonts.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
 <body>
@@ -19,9 +20,32 @@
     </header>
     <main>
         <div class="container">
-            <input type="file" id="imageInput" accept="image/*" style="display: none" />
+            <label id="imageInfo">Image Info</label>
+            <!-- <input type="file" id="imageInput" accept="image/*" style="display: none" multiple onchange="handleUpload()" /> -->
+            <input type="file" id="imageInput" accept="image/*" style="display: none" multiple />
             <label for="imageInput" id="button-upload">UPLOAD GAMBAR</label>
-            <button id="button-translate" onclick="uploadImage()">Terjemahkan</button>
+            <button id="button-translate" >Terjemahkan</button>
+            <div class="language-dropdown">
+                <select name="" id="source-lang">
+                    <option value="">- pilih bahasa -</option>
+                    <option value="jp">Bahasa Jepang</option>
+                    <option value="ko">Bahasa Korea</option>
+                    <option value="ch_sim">Bahasa Mandarin</option>
+                    <option value="en">Bahasa Inggris</option>
+                </select>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="icon-change-lang">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                <select name="" id="target-lang">
+                    <option value="">- pilih bahasa -</option>
+                    <option value="id">Bahasa Indonesia</option>
+                    <option value="en">Bahasa Inggris</option>
+                </select>
+            </div>
+            <button id="downloadPdfBtn">Download PDF</button>
+
         </div>
         <div class="hero">
             <img src="../static/assets/hero-banner (2).jpg" alt="manga page 2">
@@ -31,10 +55,12 @@
         <div class="results">
             <div id="resultImage"></div>
         </div>
-        
+
     </main>
     <!-- show result -->
     <script src="../static/script/script.js"></script>
+    <script src="../static/script/timer.js"></script>
+    <script src="../static/script/disabled.js"></script>
 </body>
 
 </html>
