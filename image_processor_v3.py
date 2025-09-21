@@ -3,7 +3,6 @@ import torch
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from manga_ocr import MangaOcr
-from transformers import pipeline as hf_pipeline
 import pathlib
 import re
 import requests
@@ -26,14 +25,19 @@ model_path = "yolo-model/bubble-detector-new/weights/best.pt"
 model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, source='github', force_reload=True)
 
 ocr = MangaOcr()
-translator = hf_pipeline("translation", model="Helsinki-NLP/opus-mt-ja-en")
-translator_id = hf_pipeline("translation", model="Helsinki-NLP/opus-mt-en-id")
-
 
 def translate_with_gemini(japanese_text):
-    prompt = f"Terjemahkan teks Jepang ini ke bahasa Indonesia. Hasil terjemahan ini digunakan untuk menerjemahkan berbagai macam komik. Tidak membutuhkan response tambahan berupa pertanyaan, terjemahkan saja teks Jepang ke bahasa Indonesia, jangan berikan respon berupa romaji:\n\n{japanese_text}"
+    prompt2id = f"""
+    Aturan:
+    1) Terjemahkan ke bahasa Indonesia! 
+    2) Hasil terjemahan ini digunakan untuk menerjemahkan berbagai macam komik, buatlah hasil terjemahannya terkesan natural sehingga mudah dipahami!
+    3) Tidak membutuhkan response berupa pertanyaan, rekomendasi, dan saran, misalnya ("baiklah akan saya terjemahkan...). Terjemahkan saja teks Jepang ke bahasa Indonesia layaknya dialog.
+    4) Selain itu, untuk teks dengan tulisan katakana yang merupakan serapan bahasa asing seperti Inggris, terjemahkan ke bahasa Inggris.
+    5) Untuk tanda baca titik seperti (. . .) atau (...), dan lain sebagainya, tuliskan saja seperti aslinya, karena itu memang dialognya!
+    6) Dalam bahasa Jepang, terdapat chōonpu (full-width dash, ―) yang berfungsi seperti em dash, jika ada tuliskan tanda em dash
+    \n\n{japanese_text}"""
 
-    headers = {
+    headers = { 
         'Content-Type': 'application/json',
         'X-goog-api-key': API_KEY
     }
@@ -42,7 +46,7 @@ def translate_with_gemini(japanese_text):
         "contents": [
             {
                 "parts": [
-                    {"text": prompt}
+                    {"text": prompt2id}
                 ]
             }
         ]
@@ -88,7 +92,7 @@ def wrap_text(text, draw, font, max_width):
     return lines
 
 
-def process_image(image_path):
+def process_image(image_path, sourceLang, targetLang):
     img_cv = cv2.imread(image_path)
     img_rgb = cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB)
     img_pil = Image.fromarray(img_rgb)

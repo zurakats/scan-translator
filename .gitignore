@@ -1,2 +1,6 @@
+_pycache_/
 venv/
-.env
+.env/
+image_processor_v2.py/
+image_processor_v3.py/
+image_processor_v4.py

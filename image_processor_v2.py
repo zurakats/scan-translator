@@ -3,7 +3,9 @@ import torch
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 from manga_ocr import MangaOcr
-from transformers import pipeline as hf_pipeline
+import easyocr
+import numpy as np
+from googletrans import Translator
 import pathlib
 import re
 
@@ -11,10 +13,46 @@ pathlib.PosixPath = pathlib.WindowsPath
 
 model_path = "yolo-model/bubble-detector-new/weights/best.pt"
 model = torch.hub.load('ultralytics/yolov5', 'custom', path=model_path, source='github', force_reload=True)
+model.conf = 0.6
 
-ocr = MangaOcr()
-translator = hf_pipeline("translation", model="Helsinki-NLP/opus-mt-ja-en")
-translator_id = hf_pipeline("translation", model="Helsinki-NLP/opus-mt-en-id")
+translator = Translator()
+
+def process_language(sourceLang):
+    try:        
+        if sourceLang == "jp":
+            return "ja"
+        elif sourceLang == "ko":
+            return "ko"
+        elif sourceLang == "ch_sim":
+            return "zh_cn"
+        elif sourceLang == "en":
+            return "en"
+            
+    except Exception as e:
+        print(f"⚠️ Error saat memproses OCR: {e}")
+        raise
+    
+def get_language_codes(sourceLang):
+    mapping = {
+        "jp": ("jp", "ja"), # Jepang
+        "ko": ("ko", "ko"), # Korea
+        "ch_sim": ("ch_sim", "zh-cn"), # Mandarin Sederhana
+        "ch_tra": ("ch_tra", "zh-tw"), # Mandarin Tradisional
+        "en": ("en", "en") # Inggris
+    }
+
+    if sourceLang not in mapping:
+        raise ValueError(f"Unsupported language code: {sourceLang}")
+
+    return mapping[sourceLang] 
+
+def selectOCR(sourceLang):
+    easyocr_code, translate_code = get_language_codes(sourceLang)
+    
+    if (easyocr_code == "jp"):
+        return MangaOcr(), 0, translate_code
+    else:
+        return easyocr.Reader([f'{easyocr_code}']), 1, translate_code
 
 def clean_ocr_text(ocr_text):
     if not ocr_text:
@@ -40,7 +78,7 @@ def wrap_text(text, draw, font, max_width):
         lines.append(current_line)
     return lines
 
-def process_image(image_path):
+def process_image(image_path, ocr, index, translate_code, targetLang):
     img_cv = cv2.imread(image_path)
     img_rgb = cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB)
     img_pil = Image.fromarray(img_rgb)
@@ -55,13 +93,18 @@ def process_image(image_path):
         box_width = x2 - x1
         box_height = y2 - y1
         cropped = img_pil.crop((x1, y1, x2, y2))
+        
+        if (index == 0):
+            text = ocr(cropped) or ""
+        else:
+            cropped_np = np.array(cropped)
+            result = ocr.readtext(cropped_np, detail=0)
+            text = " ".join(result) or ""
 
-        text = ocr(cropped) or ""
         cleaned_text = clean_ocr_text(text) or ""
 
         if cleaned_text.strip():
-            translated_en = translator(cleaned_text)[0]['translation_text']
-            translated = translator_id(translated_en)[0]['translation_text']
+            translated = translator.translate(cleaned_text, src=translate_code, dest=targetLang).text
             translated = re.sub(r'\bLai\b', '!', translated)
         else:
             translated = "[Teks tidak terbaca]"

@@ -1,13 +1,11 @@
 flask
+flask-cors
 torch
 manga-ocr
+easyocr
 googletrans==4.0.0rc1
 opencv-python-headless
 Pillow
 ultralytics
-seaborn
-flask-cors
-transformers
-sentencepiece
 dotenv
 python-dotenv
