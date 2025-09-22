@@ -36,8 +36,8 @@ def get_language_codes(sourceLang):
     mapping = {
         "jp": ("jp", "ja"), # Jepang
         "ko": ("ko", "ko"), # Korea
-        "ch_sim": ("ch_sim", "zh-cn"), # Mandarin Sederhana
-        "ch_tra": ("ch_tra", "zh-tw"), # Mandarin Tradisional
+        "ch_sim": ("ch_sim", "zh-cn"), # Simplified Mandarin
+        "ch_tra": ("ch_tra", "zh-tw"), # Traditional Mandarin
         "en": ("en", "en") # Inggris
     }
 
@@ -86,7 +86,7 @@ def process_image(image_path, ocr, index, translate_code, targetLang):
 
     results = model(img_rgb)
     detections = results.pandas().xyxy[0]
-    font_path = "C:\\Windows\\Fonts\\arial.ttf"
+    font_path = "static/fonts/Winky_Rough/WinkyRough-Regular.ttf"
 
     for _, row in detections.iterrows():
         x1, y1, x2, y2 = map(int, [row['xmin'], row['ymin'], row['xmax'], row['ymax']])
@@ -113,7 +113,7 @@ def process_image(image_path, ocr, index, translate_code, targetLang):
         print("Cleaned Text:", cleaned_text)
         print("Translated:", translated)
 
-        font_size = 32
+        font_size = 100
         while font_size >= 10:
             font = ImageFont.truetype(font_path, font_size)
             lines = wrap_text(translated, draw, font, box_width)

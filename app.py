@@ -1,6 +1,6 @@
 from flask import Flask, request, send_file, render_template, jsonify
 from flask_cors import CORS
-from image_processor_v4 import process_image, selectOCR
+from image_processor import process_image, selectOCR
 from werkzeug.utils import secure_filename
 import os
 import base64
@@ -8,7 +8,7 @@ import base64
 app = Flask(__name__)
 CORS(app)
 
-UPLOAD_FOLDER = 'static'
+UPLOAD_FOLDER = os.path.join("static", "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route('/')
