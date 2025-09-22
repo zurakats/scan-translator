@@ -17,6 +17,6 @@ function stopTimer() {
 
 function resetTimer() {
     imageUploadInfo.innerText = `Proses terjemahan selesai! \nMemakan waktu: ${count} detik`;
-    imageUploadInfo.style.backgroundColor = "rgba(0, 128, 0, 0.6)"; // hijau tanda sukses
+    imageUploadInfo.style.backgroundColor = "rgba(0, 128, 0, 0.6)";
     stopTimer();
 }
