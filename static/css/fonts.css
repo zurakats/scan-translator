@@ -1,0 +1,105 @@
+/* Font Winky Rough */
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-BlackItalic.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-ExtraBold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-ExtraBoldItalic.ttf') format('truetype');
+    font-weight: 800;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-LightItalic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'WinkyRough';
+    src: url('../fonts/Winky_Rough/WinkyRough-SemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Font Trade Winds */
+@font-face {
+    font-family: 'TradeWinds';
+    src: url('../fonts/Trade_Winds/TradeWinds-Regular.ttf') format('truetype');
+}

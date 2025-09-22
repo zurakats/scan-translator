@@ -1,0 +1,182 @@
+main {
+    box-sizing: border-box;
+    padding-top: 80px;
+    font-size: 1.5em;
+}
+
+/* Container */
+
+#imageInfo {
+    font-size: 18px;
+    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    z-index: -100;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: calc(100vh - 80px);
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+#button-upload {
+    width: 400px;
+    height: 71px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1E1E1E;
+    font-size: 28px;
+    border: 3px solid #1E1E1E;
+    border-radius: 5px;
+    color: #ffffff;
+    transition: background-color 0.3s ease-out, color 0.3s ease-out;
+    cursor: pointer;
+}
+
+#button-upload:hover {
+    color: #1E1E1E;
+    background-color: #ffffff;
+}
+
+#button-translate {
+    width: 200px;
+    height: 53px;
+    font-size: 18px;
+    background-color: #267BFA;
+    border: 2px solid #267BFA;
+}
+
+#button-translate:hover {
+    color: #0043a8;
+    background-color: #ffffff;
+}
+
+#button-translate,
+#downloadPdfBtn {
+    border-radius: 5px;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    color: #ffffff;
+    border: 2px solid #267BFA;
+    transition: background-color 0.3s ease-out, color 0.3s ease-out;
+}
+
+.language-dropdown {
+    display: flex;
+    gap: 10px;
+    color: #267BFA;
+    align-items: center;
+}
+
+#source-lang,
+#target-lang {
+    height: 55px;
+    width: 237px;
+    font-size: 18px;
+    padding: 10px;
+    border: 2px solid #267BFA;
+    cursor: pointer;
+}
+
+option:nth-child(1) {
+    color: #444444;
+}
+
+.icon-change-lang {
+    width: 30px;
+    height: 30px;
+    background-color: #ffffff;
+    border-radius: 50%;
+}
+
+#downloadPdfBtn {
+    padding: 10px;
+    font-size: 14px;
+    background-color: #1E1E1E;
+    color: #ffffff;
+    border: 2px solid #1E1E1E;
+}
+
+#downloadPdfBtn:hover {
+    background-color: #ffffff;
+    color: #1E1E1E;
+}
+
+/* Hero Banner */
+
+.hero {
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: -10;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    background: linear-gradient(to top, #1E1E1E, transparent);
+    bottom: 0;
+    width: 100%;
+    height: 65%;
+}
+
+.hero img {
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Output Results */
+
+.results {
+    background-color: #1E1E1E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Responsive Layout */
+@media screen and (max-width: 650px) {
+    #button-upload {
+        width: 300px;
+    }
+
+    #button-translate {
+        width: 300px;
+    }
+
+    #source-lang,
+    #target-lang {
+        width: 300px;
+    }
+
+    .language-dropdown {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .icon-change-lang {
+        rotate: 90deg;
+    }
+}
